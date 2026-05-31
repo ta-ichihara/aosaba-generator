@@ -197,17 +197,23 @@ function launchConfetti(){
     }
 }
 
-document
-    .getElementById("special-effect")
-    .addEventListener("click", closeSpecialEffect);
-
-document
-    .getElementById("special-effect")
-    .addEventListener("touchstart", closeSpecialEffect);
 
 function closeSpecialEffect(){
 
     document
         .getElementById("special-effect")
         .classList.add("hidden");
+}
+
+document
+    .getElementById("close-popup")
+    .addEventListener("click", closeSpecialEffect);
+
+function closeSpecialEffect(){
+
+    document
+        .getElementById("special-effect")
+        .classList.add("hidden");
+
+    document.body.style.overflow = "";
 }
