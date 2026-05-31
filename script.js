@@ -1,35 +1,35 @@
-const DEBUG = false;
-
 const colors = [
-    "青"
-//    "赤",
-//    "黒",
-//    "白",
-//    "銀",
-//    "透明",
-//    "錆びた",
-//    "濁った"
+    "青",
+    "黒",
+    "銀",
+    "透け",
+    "錆び",
+    "濁り"
 ];
 
 const animals = [
-    "鯖"
-//    "猫",
-//    "犬",
-//    "狐",
-//    "鳥",
-//    "蛙",
-//    "魚"
+    "鯖",
+    "モグラ",
+    "コアラ",
+    "すっぽん",
+    "ハト",
+    "サメ"
 ];
 
 const places = [
-    "が空に浮いた",
-    "が地下に沈んだ"
-//    "が雨に濡れた",
-//    "が壊れかけた",
-//    "が遠くで燃えている"
+    "が空に浮いたような",
+    "を地面に置いたような",
+    "をひっくり返したような",
+    "の漬けパスタみたいな",
+    "を一昨日から煮しめたような",
+    "が遠くで燃えているような",
+    "をずいぶんとふやかしたような",
+    "が一夜漬けしたような",
+    "が半分溶けたような"
+
 ];
 
-function animateSlot(id, words, duration){
+function animateSlot(id, words, duration, fixedWord = null){
 
     return new Promise(resolve => {
 
@@ -59,6 +59,7 @@ function animateSlot(id, words, duration){
             slot.querySelectorAll(".item");
 
         const finalWord =
+            fixedWord ??
             words[Math.floor(Math.random() * words.length)];
 
         items[items.length - 1].innerText =
@@ -92,6 +93,9 @@ function animateSlot(id, words, duration){
 
 async function startSlot(){
 
+    const sampleMode =
+        document.getElementById("sample-mode").checked;
+
     const specialEffect =
         document.getElementById("special-effect");
 
@@ -103,16 +107,32 @@ async function startSlot(){
     let animal;
     let place;
 
-    if(DEBUG){
-
-        await animateSlot("slot1", colors, 1500);
-        await animateSlot("slot2", animals, 2500);
-        await animateSlot("slot3", places, 3500);
-
-        color = "青";
-        animal = "鯖";
-        place = "が空に浮いた";
-
+    if(sampleMode){
+    
+        color =
+            await animateSlot(
+                "slot1",
+                colors,
+                1500,
+                "青"
+            );
+    
+        animal =
+            await animateSlot(
+                "slot2",
+                animals,
+                2500,
+                "鯖"
+            );
+    
+        place =
+            await animateSlot(
+                "slot3",
+                places,
+                3500,
+                "が空に浮いたような"
+            );
+    
     }else{
 
         color =
@@ -129,12 +149,12 @@ async function startSlot(){
         color + animal + place;
 
     document.getElementById("result").innerText =
-        "「" + finalText + "ような顔」";
+        "「" + finalText + "顔」";
 
     if(
         color === "青" &&
         animal === "鯖" &&
-        place === "が空に浮いた"
+        place === "が空に浮いたような"
     ){
 
         document.getElementById("special-result").innerText =

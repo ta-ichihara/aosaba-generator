@@ -79,6 +79,27 @@ button:hover{
     transform:scale(1.05);
 }
 
+.control-area{
+
+    margin-top:20px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:12px;
+}
+
+.sample-check input{
+
+    width:18px;
+    height:18px;
+}
+
 #result{
     margin-top:24px;
     font-size:24px;
