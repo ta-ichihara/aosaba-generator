@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>青鯖悪口ジェネレータ</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<h1>青鯖悪口ジェネレータ</h1>
+<p class="description">
+    中原中也ばりの文学性にあふれた悪口をランダムに生成するツールです。
+    いい悪口を探してみてください。
+</p>
+
+<div class="slot-area">
+
+    <div class="slot-frame">
+        <div class="slot-inner" id="slot1"></div>
+    </div>
+
+    <div class="slot-frame">
+        <div class="slot-inner" id="slot2"></div>
+    </div>
+
+    <div class="slot-frame">
+        <div class="slot-inner" id="slot3"></div>
+    </div>
+
+</div>
+
+<button onclick="startSlot()">
+START
+</button>
+
+<div id="result"></div>
+
+<div id="special-effect" class="hidden">
+
+    <img src="dazai_1.png" id="special-image">
+
+    <div id="congrats">
+        🎉 おめでとう！ 🎉
+    </div>
+
+    <div id="special-result"></div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
