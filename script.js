@@ -152,7 +152,7 @@ async function startSlot(){
                 "slot3",
                 places,
                 3500,
-                "が空に浮いたような"
+                "が空に浮かんだような"
             );
 
     }else{
@@ -188,7 +188,7 @@ async function startSlot(){
     if(
         color === "青" &&
         animal === "鯖" &&
-        place === "が空に浮いたような"
+        place === "が空に浮かんだような"
     ){
 
         document.getElementById("special-result").innerText =
