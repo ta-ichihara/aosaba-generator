@@ -2,6 +2,12 @@ let colors = [];
 let animals = [];
 let places = [];
 
+let previousResults = {
+    slot1: null,
+    slot2: null,
+    slot3: null
+};
+
 async function loadWords(){
 
     try{
@@ -61,9 +67,28 @@ function animateSlot(id, words, duration, fixedWord = null){
         const items =
             slot.querySelectorAll(".item");
 
-        const finalWord =
-            fixedWord ??
-            words[Math.floor(Math.random() * words.length)];
+        let finalWord;
+
+        if(fixedWord){
+
+            finalWord = fixedWord;
+
+        }else{
+
+            const filteredWords =
+                words.filter(word =>
+                    word !== previousResults[id]
+                );
+
+            finalWord =
+                filteredWords[
+                    Math.floor(
+                        Math.random() * filteredWords.length
+                    )
+                ];
+        }
+
+        previousResults[id] = finalWord;
 
         items[items.length - 1].innerText =
             finalWord;
