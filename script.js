@@ -1,33 +1,36 @@
-const colors = [
-    "青",
-    "黒",
-    "銀",
-    "透け",
-    "錆び",
-    "濁り"
-];
+let colors = [];
+let animals = [];
+let places = [];
 
-const animals = [
-    "鯖",
-    "モグラ",
-    "コアラ",
-    "すっぽん",
-    "ハト",
-    "サメ"
-];
+async function loadWords(){
 
-const places = [
-    "が空に浮いたような",
-    "を地面に置いたような",
-    "をひっくり返したような",
-    "の漬けパスタみたいな",
-    "を一昨日から煮しめたような",
-    "が遠くで燃えているような",
-    "をずいぶんとふやかしたような",
-    "が一夜漬けしたような",
-    "が半分溶けたような"
+    try{
 
-];
+        const response =
+            await fetch("words.json");
+
+        const data =
+            await response.json();
+
+        colors = data.colors;
+        animals = data.animals;
+        places = data.places;
+
+        console.log("words loaded");
+
+    }catch(error){
+
+        console.error(
+            "words.json の読み込み失敗",
+            error
+        );
+    }
+}
+
+window.addEventListener(
+    "load",
+    loadWords
+);
 
 function animateSlot(id, words, duration, fixedWord = null){
 
@@ -93,6 +96,17 @@ function animateSlot(id, words, duration, fixedWord = null){
 
 async function startSlot(){
 
+    if(
+        colors.length === 0 ||
+        animals.length === 0 ||
+        places.length === 0
+    ){
+
+        alert("単語データ読み込み中です");
+
+        return;
+    }
+
     const sampleMode =
         document.getElementById("sample-mode").checked;
 
@@ -108,7 +122,7 @@ async function startSlot(){
     let place;
 
     if(sampleMode){
-    
+
         color =
             await animateSlot(
                 "slot1",
@@ -116,7 +130,7 @@ async function startSlot(){
                 1500,
                 "青"
             );
-    
+
         animal =
             await animateSlot(
                 "slot2",
@@ -124,7 +138,7 @@ async function startSlot(){
                 2500,
                 "鯖"
             );
-    
+
         place =
             await animateSlot(
                 "slot3",
@@ -132,17 +146,29 @@ async function startSlot(){
                 3500,
                 "が空に浮いたような"
             );
-    
+
     }else{
 
         color =
-            await animateSlot("slot1", colors, 1500);
+            await animateSlot(
+                "slot1",
+                colors,
+                1500
+            );
 
         animal =
-            await animateSlot("slot2", animals, 2500);
+            await animateSlot(
+                "slot2",
+                animals,
+                2500
+            );
 
         place =
-            await animateSlot("slot3", places, 3500);
+            await animateSlot(
+                "slot3",
+                places,
+                3500
+            );
     }
 
     const finalText =
@@ -158,76 +184,133 @@ async function startSlot(){
     ){
 
         document.getElementById("special-result").innerText =
-        "青鯖が空に浮いたような顔";
+            "";
+
         specialEffect.classList.remove("hidden");
+
         document.body.style.overflow = "hidden";
+
         launchConfetti();
     }
 }
 
 function launchConfetti(){
 
-    for(let i = 0; i < 100; i++){
-
-        const confetti =
-            document.createElement("div");
-
-        const icons = [
-            "🎉",
-            "🎊",
-            "✨",
-            "⭐"
-        ];
-
-        confetti.innerText =
-            icons[Math.floor(Math.random() * icons.length)];
-
-        confetti.style.position = "fixed";
-
-        confetti.style.left =
-            Math.random() * 100 + "vw";
-
-        confetti.style.top = "-50px";
-
-        confetti.style.fontSize =
-            (20 + Math.random() * 40) + "px";
-
-        confetti.style.zIndex = 9999;
-
-        confetti.style.transition =
-            "transform 3s linear, top 3s linear";
-
-        document.body.appendChild(confetti);
+    for(let i = 0; i < 8; i++){
 
         setTimeout(() => {
 
-            confetti.style.top = "110vh";
+            createFirework();
 
-            confetti.style.transform =
-                `rotate(${Math.random() * 1080}deg)`;
-
-        }, 10);
-
-        setTimeout(() => {
-
-            confetti.remove();
-
-        }, 3000);
-
+        }, i * 500);
     }
 }
 
+function createFirework(){
 
-function closeSpecialEffect(){
+    const firework =
+        document.createElement("div");
 
-    document
-        .getElementById("special-effect")
-        .classList.add("hidden");
+    firework.className = "firework";
+
+    const x =
+        Math.random() * window.innerWidth;
+
+    const y =
+        150 + Math.random() * (
+            window.innerHeight * 0.4
+        );
+
+    firework.style.left = x + "px";
+
+    firework.style.top =
+        window.innerHeight + "px";
+
+    document.body.appendChild(firework);
+
+    requestAnimationFrame(() => {
+
+        firework.style.top = y + "px";
+
+    });
+
+    setTimeout(() => {
+
+        explodeFirework(x, y);
+
+        firework.remove();
+
+    }, 900);
+}
+
+function explodeFirework(x, y){
+
+    const fireworkColors = [
+        "#ff4d4d",
+        "#ffd24d",
+        "#4dd2ff",
+        "#ffffff",
+        "#ff66ff"
+    ];
+
+    for(let i = 0; i < 24; i++){
+
+        const particle =
+            document.createElement("div");
+
+        particle.className =
+            "firework-particle";
+
+        const angle =
+            (Math.PI * 2 / 24) * i;
+
+        const distance =
+            80 + Math.random() * 60;
+
+        const dx =
+            Math.cos(angle) * distance;
+
+        const dy =
+            Math.sin(angle) * distance;
+
+        particle.style.left =
+            x + "px";
+
+        particle.style.top =
+            y + "px";
+
+        particle.style.background =
+            fireworkColors[
+                Math.floor(
+                    Math.random() * fireworkColors.length
+                )
+            ];
+
+        document.body.appendChild(particle);
+
+        requestAnimationFrame(() => {
+
+            particle.style.transform =
+                `translate(${dx}px, ${dy}px)`;
+
+            particle.style.opacity =
+                "0";
+        });
+
+        setTimeout(() => {
+
+            particle.remove();
+
+        }, 1200);
+    }
 }
 
 document
     .getElementById("close-popup")
-    .addEventListener("click", closeSpecialEffect);
+    .addEventListener(
+        "click",
+        closeSpecialEffect
+    );
 
 function closeSpecialEffect(){
 

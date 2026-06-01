@@ -301,3 +301,42 @@ button:hover{
 
     cursor:pointer;
 }
+
+.firework{
+
+    position:fixed;
+
+    width:6px;
+    height:40px;
+
+    background:white;
+
+    border-radius:999px;
+
+    z-index:10000;
+
+    transition:
+        top 0.9s ease-out;
+}
+
+.firework-particle{
+
+    position:fixed;
+
+    width:10px;
+    height:10px;
+
+    border-radius:50%;
+
+    z-index:10000;
+
+    opacity:1;
+
+    transition:
+        transform 1.2s ease-out,
+        opacity 1.2s ease-out;
+
+    box-shadow:
+        0 0 10px currentColor,
+        0 0 20px currentColor;
+}
