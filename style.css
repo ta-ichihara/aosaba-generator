@@ -79,6 +79,15 @@ button:hover{
     transform:scale(1.05);
 }
 
+button:disabled{
+
+    opacity:0.5;
+
+    cursor:not-allowed;
+
+    transform:none !important;
+}
+
 .control-area{
 
     margin-top:20px;

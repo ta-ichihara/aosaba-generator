@@ -95,6 +95,14 @@ function animateSlot(id, words, duration, fixedWord = null){
 }
 
 async function startSlot(){
+    const startButton =
+        document.getElementById("start-button");
+
+    if(startButton.disabled){
+        return;
+    }
+
+    startButton.disabled = true;
 
     if(
         colors.length === 0 ||
@@ -192,6 +200,8 @@ async function startSlot(){
 
         launchConfetti();
     }
+
+    startButton.disabled = false;
 }
 
 function launchConfetti(){
